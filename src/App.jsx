@@ -2,26 +2,26 @@ import { useState, useMemo, useEffect, useCallback } from "react";
 import { loadData, saveData } from "./supabase.js";
 
 const PAL = {
-  purple:{ light:"#EEEDFE", mid:"#AFA9EC", dark:"#3C3489", accent:"#534AB7" },
-  teal:  { light:"#E1F5EE", mid:"#5DCAA5", dark:"#085041", accent:"#0F6E56" },
-  coral: { light:"#FAECE7", mid:"#F0997B", dark:"#4A1B0C", accent:"#993C1D" },
-  blue:  { light:"#E6F1FB", mid:"#85B7EB", dark:"#042C53", accent:"#185FA5" },
-  amber: { light:"#FAEEDA", mid:"#EF9F27", dark:"#412402", accent:"#854F0B" },
-  pink:  { light:"#FBEAF0", mid:"#ED93B1", dark:"#4B1528", accent:"#993556" },
+  purple:{ light:"#EDF3EF", mid:"#B5CFC0", dark:"#2D4A36", accent:"#7A9E87" },
+  teal:  { light:"#EBF0EE", mid:"#8FA89A", dark:"#1E3830", accent:"#5A8A76" },
+  coral: { light:"#F7F0E6", mid:"#D4B896", dark:"#6B4F2A", accent:"#C4A882" },
+  blue:  { light:"#EEF0F7", mid:"#B0B8D4", dark:"#2A3060", accent:"#6A7AB0" },
+  amber: { light:"#F5F0E6", mid:"#C4B090", dark:"#40300E", accent:"#A08050" },
+  pink:  { light:"#F7EDEB", mid:"#D4A89A", dark:"#4A2820", accent:"#C4897A" },
 };
 const CKEYS = Object.keys(PAL);
 const PRI = {
-  high:{ bg:"#FCEBEB", text:"#A32D2D", label:"緊急", emoji:"🔥", bar:"#E24B4A" },
-  mid: { bg:"#FAEEDA", text:"#854F0B", label:"優先", emoji:"⚡", bar:"#EF9F27" },
-  low: { bg:"#EAF3DE", text:"#3B6D11", label:"一般", emoji:"🌿", bar:"#639922" },
+  high:{ bg:"#FDF0EE", text:"#8A2A1E", label:"緊急", emoji:"🔥", bar:"#C4897A" },
+  mid: { bg:"#F7F0E6", text:"#6B4A1E", label:"優先", emoji:"⚡", bar:"#C4A882" },
+  low: { bg:"#EDF3EF", text:"#2D4A36", label:"一般", emoji:"🌿", bar:"#7A9E87" },
 };
 const MONTHS = ["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"];
 const WDAYS  = ["日","一","二","三","四","五","六"];
 const EVT_TYPES = {
-  task:    { label:"任務截止", emoji:"📋", bg:"#EEEDFE", border:"#AFA9EC", text:"#3C3489" },
-  school:  { label:"學校行事", emoji:"🏫", bg:"#E6F1FB", border:"#85B7EB", text:"#042C53" },
-  meeting: { label:"會議活動", emoji:"📌", bg:"#FAECE7", border:"#F0997B", text:"#4A1B0C" },
-  remind:  { label:"個人提醒", emoji:"🔔", bg:"#FAEEDA", border:"#EF9F27", text:"#412402" },
+  task:    { label:"任務截止", emoji:"📋", bg:"#EDF3EF", border:"#B5CFC0", text:"#2D4A36" },
+  school:  { label:"學校行事", emoji:"🏫", bg:"#EEF0F7", border:"#B0B8D4", text:"#2A3060" },
+  meeting: { label:"會議活動", emoji:"📌", bg:"#F7F0E6", border:"#D4B896", text:"#6B4F2A" },
+  remind:  { label:"個人提醒", emoji:"🔔", bg:"#F5F0E6", border:"#C4B090", text:"#40300E" },
 };
 
 function daysUntil(d){ return d ? Math.ceil((new Date(d)-new Date())/86400000) : 999; }
@@ -198,8 +198,8 @@ export default function App() {
     if(type==="summary") setTab("小結");
   }
 
-  const inp={width:"100%",padding:"8px 12px",fontSize:13,borderRadius:10,border:"1.5px solid #e0d9f5",background:"#fff",color:"#2a2060",boxSizing:"border-box",outline:"none",fontFamily:"inherit"};
-  const card={background:"#fff",borderRadius:20,border:"1.5px solid #e8e4f5",padding:"16px"};
+  const inp={width:"100%",padding:"8px 12px",fontSize:13,borderRadius:10,border:"1.5px solid #E2DDD6",background:"#fff",color:"#3A3530",boxSizing:"border-box",outline:"none",fontFamily:"inherit"};
+  const card={background:"#fff",borderRadius:20,border:"1px solid #E8E4DC",padding:"16px"};
   const {first,total}=(()=>{ const f=new Date(calYear,calMonth,1).getDay(),t=new Date(calYear,calMonth+1,0).getDate(); return{first:f,total:t}; })();
 
   function TaskCard({t,pid,pColor,pName,showProject=false}){
@@ -236,15 +236,15 @@ export default function App() {
   }
 
   if(dbLoading) return(
-    <div style={{display:"flex",alignItems:"center",justifyContent:"center",height:400,flexDirection:"column",gap:14,fontFamily:"var(--font-sans)"}}>
-      <div style={{width:20,height:20,borderRadius:"50%",border:"2.5px solid #534AB7",borderTopColor:"transparent",animation:"spin 0.8s linear infinite"}}/>
-      <div style={{fontSize:13,color:"#9a88cc"}}>載入資料中...</div>
+          <div style={{display:"flex",alignItems:"center",justifyContent:"center",height:400,flexDirection:"column",gap:14,fontFamily:"var(--font-sans)"}}>
+      <div style={{width:20,height:20,borderRadius:"50%",border:"2.5px solid #7A9E87",borderTopColor:"transparent",animation:"spin 0.8s linear infinite"}}/>
+      <div style={{fontSize:13,color:"#9A9088"}}>載入資料中...</div>
       <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
     </div>
   );
 
   return(
-    <div style={{fontFamily:"var(--font-sans)",background:"#faf8ff",minHeight:600,padding:"1.25rem 1rem"}}>
+    <div style={{fontFamily:"var(--font-sans)",    background:"#F7F5F0",minHeight:600,padding:"1.25rem 1rem"}}>
       <style>{`
         @keyframes spin{to{transform:rotate(360deg)}}
         @keyframes pop{0%{transform:scale(0.92);opacity:0}100%{transform:scale(1);opacity:1}}
@@ -252,22 +252,22 @@ export default function App() {
         .tab-btn:hover{background:#f0eeff!important}
       `}</style>
 
-      <div style={{position:"relative",background:"linear-gradient(135deg,#f0eeff 0%,#fce8f5 50%,#e8f5ee 100%)",borderRadius:24,padding:"18px 20px 14px",marginBottom:14,overflow:"hidden"}}>
+      <div style={{position:"relative",        background:"linear-gradient(135deg,#EDF3EF 0%,#F5F0E8 50%,#EEF0F7 100%)",borderRadius:24,padding:"18px 20px 14px",marginBottom:14,overflow:"hidden"}}>
         <Deco/>
         <div style={{position:"relative",zIndex:1}}>
           <div style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
             <div>
-              <div style={{fontSize:11,fontWeight:500,letterSpacing:2,color:"#9a88cc",textTransform:"uppercase",marginBottom:4}}>✿ Work Planner ✿</div>
-              <h1 style={{margin:0,fontSize:22,fontWeight:500,color:"#2a2060"}}>工作管理中心 <span style={{fontSize:12,color:"#AFA9EC"}}>★★★</span></h1>
+              <div style={{fontSize:11,fontWeight:500,letterSpacing:2,color:"#9A9088",textTransform:"uppercase",marginBottom:4}}>✿ Work Planner ✿</div>
+              <h1 style={{margin:0,fontSize:22,fontWeight:500,color:"#3A3530"}}>工作管理中心 <span style={{fontSize:12,color:"#9A9088"}}>★★★</span></h1>
             </div>
             <div style={{display:"flex",gap:8,alignItems:"center"}}>
               {saveStatus&&(
-                <span style={{fontSize:11,color:saveStatus==="saved"?"#0F6E56":saveStatus==="error"?"#A32D2D":"#854F0B",background:saveStatus==="saved"?"#E1F5EE":saveStatus==="error"?"#FCEBEB":"#FAEEDA",borderRadius:8,padding:"4px 10px",border:`1px solid ${saveStatus==="saved"?"#5DCAA5":saveStatus==="error"?"#F7C1C1":"#FAC775"}`}}>
+                <span style={{fontSize:11,color:saveStatus==="saved"?"#2D4A36":saveStatus==="error"?"#8A2A1E":"#6B4A1E",background:saveStatus==="saved"?"#EDF3EF":saveStatus==="error"?"#FDF0EE":"#F7F0E6",borderRadius:8,padding:"4px 10px",border:`1px solid ${saveStatus==="saved"?"#B5CFC0":saveStatus==="error"?"#D4A89A":"#D4B896"}`}}>
                   {saveStatus==="saving"?"💾 儲存中...":saveStatus==="saved"?"✅ 已同步":"❌ 儲存失敗"}
                 </span>
               )}
-              <button onClick={()=>runAI("schedule")} style={{padding:"8px 14px",fontSize:12,borderRadius:12,border:"1.5px solid #c4b5f0",background:"#fff",color:"#534AB7",cursor:"pointer",fontWeight:500}}>🤖 AI 排程</button>
-              <button onClick={()=>runAI("summary")}  style={{padding:"8px 14px",fontSize:12,borderRadius:12,border:"none",background:"#534AB7",color:"#fff",cursor:"pointer",fontWeight:500}}>✨ 今日小結</button>
+              <button onClick={()=>runAI("schedule")} style={{padding:"8px 14px",fontSize:12,borderRadius:12,border:"1.5px solid #C8D4CA",background:"#fff",color:"#3A6A46",cursor:"pointer",fontWeight:500}}>🤖 AI 排程</button>
+              <button onClick={()=>runAI("summary")}  style={{padding:"8px 14px",fontSize:12,borderRadius:12,border:"none",background:"#7A9E87",color:"#fff",cursor:"pointer",fontWeight:500}}>✨ 今日小結</button>
             </div>
           </div>
           <div style={{display:"flex",gap:8,marginTop:12,flexWrap:"wrap"}}>
@@ -287,9 +287,9 @@ export default function App() {
         </div>
       </div>
 
-      <div style={{display:"flex",gap:6,marginBottom:14,background:"#f0eeff",borderRadius:16,padding:5}}>
+      <div style={{display:"flex",gap:6,marginBottom:14,background:"#EDF3EF",borderRadius:16,padding:5}}>
         {TABS.map(({key,emoji})=>(
-          <button key={key} className="tab-btn" onClick={()=>setTab(key)} style={{flex:1,padding:"9px 4px",fontSize:13,fontWeight:tab===key?500:400,borderRadius:12,border:"none",cursor:"pointer",background:tab===key?"#fff":"transparent",color:tab===key?"#2a2060":"#9a88cc",boxShadow:tab===key?"0 1px 4px rgba(83,74,183,0.12)":"none"}}>{emoji} {key}</button>
+          <button key={key} className="tab-btn" onClick={()=>setTab(key)} style={{flex:1,padding:"9px 4px",fontSize:13,fontWeight:tab===key?500:400,borderRadius:12,border:"none",cursor:"pointer",background:tab===key?"#fff":"transparent",color:tab===key?"#3A3530":"#9A9088",boxShadow:tab===key?"0 1px 4px rgba(0,0,0,0.06)":"none"}}>{emoji} {key}</button>
         ))}
       </div>
 
@@ -300,7 +300,7 @@ export default function App() {
               <div style={{fontSize:32,marginBottom:10}}>🌱</div>
               <div style={{fontSize:15,fontWeight:500,color:"#2a2060",marginBottom:6}}>歡迎使用工作管理中心！</div>
               <div style={{fontSize:13,color:"#9a88cc",marginBottom:16,lineHeight:1.7}}>先建立你的第一個專案，<br/>再新增任務就可以開始囉。</div>
-              <button onClick={openNewP} style={{padding:"10px 24px",fontSize:13,borderRadius:12,border:"none",background:"#534AB7",color:"#fff",cursor:"pointer",fontWeight:500}}>🌱 建立第一個專案</button>
+              <button onClick={openNewP} style={{padding:"10px 24px",fontSize:13,borderRadius:12,border:"none",background:"#7A9E87",color:"#fff",cursor:"pointer",fontWeight:500}}>🌱 建立第一個專案</button>
             </div>
           )}
           {todayTasks.length>0&&(
@@ -334,7 +334,7 @@ export default function App() {
             <div style={card}>
               <div style={{fontSize:13,fontWeight:500,color:"#2a2060",marginBottom:10,display:"flex",alignItems:"center",justifyContent:"space-between"}}>
                 <span>🧺 收集箱待處理</span>
-                <button onClick={()=>setTab("收集箱")} style={{fontSize:11,color:"#534AB7",background:"#f0eeff",border:"1px solid #c4b5f0",borderRadius:8,padding:"3px 10px",cursor:"pointer"}}>查看全部</button>
+                <button onClick={()=>setTab("收集箱")} style={{fontSize:11,color:"#3A6A46",background:"#EDF3EF",border:"1px solid #B5CFC0",borderRadius:8,padding:"3px 10px",cursor:"pointer"}}>查看全部</button>
               </div>
               {pocket.slice(0,3).map(item=>(
                 <div key={item.id} style={{display:"flex",alignItems:"center",gap:10,padding:"8px 12px",marginBottom:5,borderRadius:12,border:"1.5px solid #e0d9f5",background:"#faf8ff"}}>
@@ -372,7 +372,7 @@ export default function App() {
               {WDAYS.map((w,i)=><div key={w} style={{textAlign:"center",fontSize:12,fontWeight:500,padding:"6px 0",color:i===0?"#E24B4A":i===6?"#185FA5":"#9a88cc"}}>{w}</div>)}
             </div>
             <div style={{display:"grid",gridTemplateColumns:"repeat(7,1fr)",gap:4}}>
-              {Array.from({length:first}).map((_,i)=><div key={"e"+i} style={{minHeight:80,borderRadius:12,background:"#faf8ff",border:"1.5px solid transparent"}}/>)}
+              {Array.from({length:first}).map((_,i)=><div key={"e"+i} style={{minHeight:80,borderRadius:12,              background:"#F7F5F0",border:"1.5px solid transparent"}}/>)}
               {Array.from({length:total}).map((_,i)=>{
                 const d=i+1,key=fmtDay(d);
                 const isToday=calYear===today.getFullYear()&&calMonth===today.getMonth()&&d===today.getDate();
@@ -480,7 +480,7 @@ export default function App() {
                     <span style={{fontSize:16,fontWeight:500,color:"#2a2060"}}>{project.name}</span>
                     <span style={{fontSize:11,background:PAL[project.color]?.light,color:PAL[project.color]?.accent,borderRadius:8,padding:"2px 9px",fontWeight:500,border:`1px solid ${PAL[project.color]?.mid}`}}>{project.tasks.filter(t=>!t.done).length} 待完成</span>
                   </div>
-                  <button onClick={()=>setShowTF(v=>!v)} style={{padding:"7px 14px",fontSize:12,borderRadius:10,border:"1.5px solid #c4b5f0",background:"#f0eeff",color:"#534AB7",cursor:"pointer",fontWeight:500}}>＋ 新增任務</button>
+                  <button onClick={()=>setShowTF(v=>!v)} style={{padding:"7px 14px",fontSize:12,borderRadius:10,border:"1.5px solid #C8D4CA",background:"#EDF3EF",color:"#2D4A36",cursor:"pointer",fontWeight:500}}>＋ 新增任務</button>
                 </div>
                 {showTF&&(
                   <div style={{background:"#faf8ff",borderRadius:14,padding:"12px 14px",marginBottom:12,border:"1.5px solid #e0d9f5",animation:"pop 0.15s ease"}}>
@@ -490,14 +490,14 @@ export default function App() {
                       <div><div style={{fontSize:11,color:"#9a88cc",marginBottom:4}}>預估時數 ⏱</div><input style={inp} type="number" placeholder="1" min="0.5" step="0.5" value={newTask.est} onChange={e=>setNewTask({...newTask,est:e.target.value})}/></div>
                     </div>
                     <div style={{marginBottom:8}}><div style={{fontSize:11,color:"#9a88cc",marginBottom:4}}>說明備註 📝（選填）</div><textarea style={{...inp,resize:"vertical",minHeight:56,lineHeight:1.6}} placeholder="補充細節說明..." value={newTask.note} onChange={e=>setNewTask({...newTask,note:e.target.value})}/></div>
-                    <label style={{display:"flex",alignItems:"center",gap:8,marginBottom:12,cursor:"pointer",padding:"8px 12px",borderRadius:10,background:newTask.syncCal?"#EEEDFE":"#faf8ff",border:`1.5px solid ${newTask.syncCal?"#AFA9EC":"#e0d9f5"}`}}>
-                      <input type="checkbox" checked={newTask.syncCal} onChange={e=>setNewTask({...newTask,syncCal:e.target.checked})} style={{width:15,height:15,cursor:"pointer"}}/>
-                      <span style={{fontSize:12,color:newTask.syncCal?"#534AB7":"#9a88cc",fontWeight:newTask.syncCal?500:400}}>🗓️ 同步截止日到月曆</span>
+                    <label style={{display:"flex",alignItems:"center",gap:8,marginBottom:12,cursor:"pointer",padding:"8px 12px",borderRadius:10,                    background:newTask.syncCal?"#EDF3EF":"#F7F5F0",border:`1.5px solid ${newTask.syncCal?"#B5CFC0":"#E2DDD6"}`}}>
+                      <input type="checkbox" checked={newTask.syncCal} onChange={e=>setNewTask({...newTask,syncCal:e.target.checked})} style={{width:15,height:15,cursor:"pointer",accentColor:"#7A9E87"}}/>
+                      <span style={{fontSize:12,color:newTask.syncCal?"#2D4A36":"#9A9088",fontWeight:newTask.syncCal?500:400}}>🗓️ 同步截止日到月曆</span>
                       {newTask.syncCal&&!newTask.due&&<span style={{fontSize:11,color:"#F0997B",marginLeft:"auto"}}>請先填截止日期</span>}
                     </label>
                     <div style={{display:"flex",gap:8}}>
-                      <button style={{flex:1,padding:"8px 0",fontSize:13,borderRadius:10,border:"none",background:"#534AB7",color:"#fff",cursor:"pointer"}} onClick={addTask}>新增</button>
-                      <button style={{flex:1,padding:"8px 0",fontSize:13,borderRadius:10,border:"1.5px solid #e0d9f5",background:"transparent",color:"#9a88cc",cursor:"pointer"}} onClick={()=>setShowTF(false)}>取消</button>
+                      <div style={{flex:1,padding:"8px 0",fontSize:13,borderRadius:10,border:"none",background:"#7A9E87",color:"#fff",cursor:"pointer"}} onClick={addTask}>新增</div>
+                      <div style={{flex:1,padding:"8px 0",fontSize:13,borderRadius:10,border:"1.5px solid #E2DDD6",background:"transparent",color:"#9A9088",cursor:"pointer",textAlign:"center"}} onClick={()=>setShowTF(false)}>取消</div>
                     </div>
                   </div>
                 )}
@@ -514,7 +514,7 @@ export default function App() {
             <div style={{background:"#FAEEDA",borderRadius:14,padding:"10px 14px",border:"1.5px solid #FAC775"}}><div style={{fontSize:13,fontWeight:500,color:"#854F0B",marginBottom:3}}>🗒️ 待分類任務</div><div style={{fontSize:11,color:"#633806",lineHeight:1.6}}>確定要做、但還沒放到專案的事。</div></div>
             <div style={{background:"#E1F5EE",borderRadius:14,padding:"10px 14px",border:"1.5px solid #5DCAA5"}}><div style={{fontSize:13,fontWeight:500,color:"#0F6E56",marginBottom:3}}>🔭 觀望業務</div><div style={{fontSize:11,color:"#085041",lineHeight:1.6}}>不確定要不要辦的計畫，先放這。</div></div>
           </div>
-          <button onClick={()=>setShowPF2(v=>!v)} style={{padding:"7px 16px",fontSize:12,marginBottom:14,borderRadius:10,border:"1.5px solid #c4b5f0",background:"#f0eeff",color:"#534AB7",cursor:"pointer",fontWeight:500}}>🧺 新增到收集箱</button>
+              <button onClick={()=>setShowPF2(v=>!v)} style={{padding:"7px 16px",fontSize:12,marginBottom:14,borderRadius:10,border:"1.5px solid #C8D4CA",background:"#EDF3EF",color:"#2D4A36",cursor:"pointer",fontWeight:500}}>🧺 新增到收集箱</button>
           {showPF2&&(
             <div style={{background:"#faf8ff",borderRadius:14,padding:"12px 14px",marginBottom:14,border:"1.5px solid #e0d9f5",animation:"pop 0.15s ease"}}>
               <input style={{...inp,marginBottom:8}} placeholder="名稱" value={pocketForm.name} onChange={e=>setPocketForm({...pocketForm,name:e.target.value})} autoFocus/>
@@ -560,11 +560,11 @@ export default function App() {
         <div style={card}>
           <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:16}}>
             <div><div style={{fontSize:15,fontWeight:500,color:"#2a2060"}}>✨ 今日工作小結</div><div style={{fontSize:12,color:"#9a88cc",marginTop:2}}>由 AI 分析任務狀況並給出建議</div></div>
-            <button onClick={()=>runAI("summary")} style={{padding:"8px 14px",fontSize:12,borderRadius:10,border:"none",background:"#534AB7",color:"#fff",cursor:"pointer",fontWeight:500}}>重新生成</button>
+            <button onClick={()=>runAI("summary")} style={{padding:"8px 14px",fontSize:12,borderRadius:10,border:"none",background:"#7A9E87",color:"#fff",cursor:"pointer",fontWeight:500}}>重新生成</button>
           </div>
-          {aiLoading&&<div style={{display:"flex",alignItems:"center",gap:10,padding:"1.5rem",color:"#9a88cc",fontSize:13}}><div style={{width:14,height:14,borderRadius:"50%",border:"2px solid #534AB7",borderTopColor:"transparent",animation:"spin 0.8s linear infinite"}}/>AI 分析中...</div>}
-          {aiResult&&!aiLoading&&<div style={{background:"#faf8ff",borderRadius:14,padding:"16px 18px",fontSize:13,lineHeight:1.9,color:"#2a2060",whiteSpace:"pre-wrap",border:"1.5px solid #e0d9f5"}}>{aiResult}</div>}
-          {!aiLoading&&!aiResult&&<div style={{textAlign:"center",padding:"2.5rem 1rem",color:"#9a88cc",fontSize:13}}>點右上角「今日小結」或「重新生成」讓 AI 幫你回顧今天 ✨</div>}
+          {aiLoading&&<div style={{display:"flex",alignItems:"center",gap:10,padding:"1.5rem",color:"#9A9088",fontSize:13}}><div style={{width:14,height:14,borderRadius:"50%",border:"2px solid #7A9E87",borderTopColor:"transparent",animation:"spin 0.8s linear infinite"}}/>AI 分析中...</div>}
+          {aiResult&&!aiLoading&&<div style={{background:"#F7F5F0",borderRadius:14,padding:"16px 18px",fontSize:13,lineHeight:1.9,color:"#3A3530",whiteSpace:"pre-wrap",border:"1px solid #E8E4DC"}}>{aiResult}</div>}
+          {!aiLoading&&!aiResult&&<div style={{textAlign:"center",padding:"2.5rem 1rem",color:"#9A9088",fontSize:13}}>點右上角「今日小結」或「重新生成」讓 AI 幫你回顧今天 ✨</div>}
         </div>
       )}
 
